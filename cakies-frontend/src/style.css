@@ -1,0 +1,242 @@
+:root {
+  /* Color Palette - Modern French Patisserie */
+  --primary-bg: #FAF6F0; /* Kem ngà */
+  --text-main: #2B2622; /* Nâu đen cacao đậm */
+  --accent-main: #8B4A3D; /* Nâu đỏ đất nung */
+  --accent-main-hover: #733c31;
+  --accent-sub: #C9A876; /* Vàng caramel */
+  --accent-sub-hover: #b59564;
+  --border-color: #D4C5B0; /* Beige nhạt */
+  --success-color: #3A5A40; /* Xanh rêu đậm */
+  --bg-card: #ffffff; /* White background for cards if needed, or slightly tinted */
+  
+  /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--primary-bg);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  padding-top: 73px; /* height of navbar so content isn't hidden */
+}
+
+/* Home page hero starts from top, override main padding */
+.home-wrapper {
+  margin-top: -73px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: transparent;
+  padding: 24px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: background-color 0.4s ease, padding 0.4s ease, border-bottom 0.4s ease;
+}
+
+.navbar--scrolled {
+  background-color: var(--primary-bg);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  transition: color 0.4s ease;
+}
+
+.navbar--scrolled .logo {
+  color: var(--text-main);
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: rgba(255,255,255,0.9);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.router-link-active {
+  color: #ffffff;
+}
+
+.navbar--scrolled .nav-links a {
+  color: var(--text-main);
+}
+
+.navbar--scrolled .nav-links a:hover,
+.navbar--scrolled .nav-links a.router-link-active {
+  color: var(--accent-main);
+}
+
+.cart-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: var(--accent-main);
+  color: white;
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background-color: var(--accent-main);
+  color: white;
+  border: none;
+  border-radius: 8px; /* Tinh tế */
+  cursor: pointer;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: var(--accent-main-hover);
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  background-color: var(--border-color);
+  color: var(--text-main);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-bg);
+  border-color: var(--accent-main);
+  color: var(--accent-main);
+}
+
+/* Utilities */
+.text-center { text-align: center; }
+.mt-4 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 2rem; }
+.my-5 { margin-top: 3rem; margin-bottom: 3rem; }
+.py-5 { padding-top: 3rem; padding-bottom: 3rem; }
+
+/* Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 40px;
+  justify-content: center;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-main);
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent-sub);
+}
+
+/* Wavy Divider */
+.wavy-divider {
+  width: 100%;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='12' viewBox='0 0 40 12'%3E%3Cpath d='M0,6 C10,12 10,0 20,6 C30,12 30,0 40,6' fill='none' stroke='%23D4C5B0' stroke-width='1'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+  margin: 40px 0;
+}
