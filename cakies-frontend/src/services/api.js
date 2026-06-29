@@ -1,28 +1,73 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',
+
+    baseURL: "http://localhost:8080/api",
+
     headers: {
-        'Content-Type': 'application/json'
+
+        "Content-Type": "application/json"
+
     }
+
 });
 
-// Request interceptor to add X-Session-Id
 api.interceptors.request.use(config => {
-    const sessionId = localStorage.getItem('sessionId');
+
+    const sessionId = localStorage.getItem("sessionId");
+
     if (sessionId) {
-        config.headers['X-Session-Id'] = sessionId;
+
+        config.headers["X-Session-Id"] = sessionId;
+
     }
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+
+        config.headers.Authorization = `Bearer ${token}`;
+
+    }
+
     return config;
+
 });
 
-// Response interceptor to save new X-Session-Id
-api.interceptors.response.use(response => {
-    // If backend returns session ID in body or we extract from cart response
-    if (response.data && response.data.sessionId) {
-        localStorage.setItem('sessionId', response.data.sessionId);
+api.interceptors.response.use(
+
+    response => {
+
+        if (
+            response.data &&
+            response.data.sessionId
+        ) {
+
+            localStorage.setItem(
+                "sessionId",
+                response.data.sessionId
+            );
+
+        }
+
+        return response;
+
+    },
+
+    error => {
+
+        if (error.response?.status === 401) {
+
+            localStorage.removeItem("token");
+
+            localStorage.removeItem("user");
+
+        }
+
+        return Promise.reject(error);
+
     }
-    return response;
-});
+
+);
 
 export default api;

@@ -3,18 +3,20 @@ services:
     image: mcr.microsoft.com/mssql/server:2025-latest
     container_name: cakies_db
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=123
+    - ACCEPT_EULA=Y
+    - SA_PASSWORD=Cakies@12345
+
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "123", "-Q", "SELECT 1", "-No"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Cakies@12345", "-Q", "SELECT 1", "-No"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
 
   backend:
     build:

@@ -13,17 +13,17 @@
     <div class="container my-5" id="menu-section">
       <!-- Category Filter -->
       <div class="category-filter mb-4 text-center">
-        <button 
-          class="btn-category" 
-          :class="{ active: !selectedCategory }" 
+        <button
+          class="btn-category"
+          :class="{ active: !selectedCategory }"
           @click="filterByCategory(null)"
         >
           Tất cả
         </button>
-        <button 
-          v-for="cat in categories" 
-          :key="cat.id" 
-          class="btn-category" 
+        <button
+          v-for="cat in categories"
+          :key="cat.id"
+          class="btn-category"
           :class="{ active: selectedCategory === cat.id }"
           @click="filterByCategory(cat.id)"
         >
@@ -56,22 +56,24 @@
 
         <!-- Pagination -->
         <div class="pagination mt-4 text-center" v-if="totalPages > 1">
-          <button 
-            class="btn-outline btn-page" 
-            :disabled="currentPage === 0" 
-            @click="changePage(currentPage - 1)">
+          <button
+            class="btn-outline btn-page"
+            :disabled="currentPage === 0"
+            @click="changePage(currentPage - 1)"
+          >
             Trước
           </button>
           <span class="page-info">Trang {{ currentPage + 1 }} / {{ totalPages }}</span>
-          <button 
-            class="btn-outline btn-page" 
-            :disabled="currentPage >= totalPages - 1" 
-            @click="changePage(currentPage + 1)">
+          <button
+            class="btn-outline btn-page"
+            :disabled="currentPage >= totalPages - 1"
+            @click="changePage(currentPage + 1)"
+          >
             Sau
           </button>
         </div>
       </div>
-      
+
       <div v-else class="text-center py-5">
         <p>Không có sản phẩm nào.</p>
       </div>
@@ -80,8 +82,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import api from '../services/api';
+import { ref, onMounted } from "vue";
+import api from "../services/api";
 
 const categories = ref([]);
 const products = ref([]);
@@ -92,7 +94,7 @@ const totalPages = ref(0);
 
 const fetchCategories = async () => {
   try {
-    const res = await api.get('/categories');
+    const res = await api.get("/categories");
     categories.value = res.data;
   } catch (error) {
     console.error("Lỗi khi tải danh mục", error);
@@ -127,13 +129,15 @@ const changePage = (page) => {
 };
 
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+    price
+  );
 };
 
 const scrollToProducts = () => {
-  const el = document.getElementById('menu-section');
+  const el = document.getElementById("menu-section");
   if (el) {
-    el.scrollIntoView({ behavior: 'smooth' });
+    el.scrollIntoView({ behavior: "smooth" });
   }
 };
 
@@ -149,7 +153,7 @@ onMounted(() => {
   width: 100%;
   height: 100vh;
   min-height: 600px;
-  background-image: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2000&auto=format&fit=crop');
+  background-image: url("https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2000&auto=format&fit=crop");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -166,9 +170,9 @@ onMounted(() => {
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(43,38,34,0.35) 0%,
-    rgba(43,38,34,0) 30%,
-    rgba(43,38,34,0.8) 100%
+    rgba(43, 38, 34, 0.35) 0%,
+    rgba(43, 38, 34, 0) 30%,
+    rgba(43, 38, 34, 0.8) 100%
   );
   z-index: 1;
 }
@@ -176,7 +180,7 @@ onMounted(() => {
 .hero-content {
   position: relative;
   z-index: 2;
-  color: #FAF6F0;
+  color: #faf6f0;
   max-width: 800px;
   padding: 0 20px;
 }
@@ -185,7 +189,7 @@ onMounted(() => {
   font-size: 48px;
   margin-bottom: 15px;
   color: #ffffff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
@@ -215,7 +219,8 @@ onMounted(() => {
   transition: all 0.3s ease;
 }
 
-.btn-category.active, .btn-category:hover {
+.btn-category.active,
+.btn-category:hover {
   background-color: var(--text-main);
   color: var(--primary-bg);
   border-color: var(--text-main);

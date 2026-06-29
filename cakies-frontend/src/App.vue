@@ -6,7 +6,9 @@
         <router-link to="/">Trang chủ</router-link>
         <router-link to="/cart" class="cart-icon">
           Giỏ hàng
-          <span v-if="cartStore.itemCount > 0" class="cart-count">{{ cartStore.itemCount }}</span>
+          <span v-if="cartStore.itemCount > 0" class="cart-count">{{
+            cartStore.itemCount
+          }}</span>
         </router-link>
       </div>
     </div>
@@ -18,8 +20,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useCartStore } from './stores/cart';
+import { ref, onMounted, onUnmounted } from "vue";
+import { useCartStore } from "./stores/cart";
+
+
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+
+import App from "./App.vue";
+import router from "./router";
+
+import "./style.css";
+
+const app = createApp(App);
+
+app.use(createPinia());
+
+app.use(router);
+
+app.mount("#app");
 
 const cartStore = useCartStore();
 const scrolled = ref(false);
@@ -30,11 +49,11 @@ const handleScroll = () => {
 
 onMounted(() => {
   cartStore.fetchCart();
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener("scroll", handleScroll);
 });
 </script>
 
