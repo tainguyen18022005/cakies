@@ -1,22 +1,23 @@
+version: "3.9"
+
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2025-latest
     container_name: cakies_db
     environment:
-    - ACCEPT_EULA=Y
-    - SA_PASSWORD=Cakies@12345
-
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Cakies@123
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Cakies@12345", "-Q", "SELECT 1", "-No"]
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Cakies@123", "-Q", "SELECT 1"]
       interval: 30s
       timeout: 10s
       retries: 10
-
 
   backend:
     build:
@@ -27,8 +28,8 @@ services:
       - DB_HOST=sqlserver
       - DB_PORT=1433
       - DB_USER=sa
-      - DB_PASSWORD=123
-      - DB_NAME=CakiesDB  
+      - DB_PASSWORD=Cakies@123
+      - DB_NAME=CakiesDB
     ports:
       - "8080:8080"
     depends_on:

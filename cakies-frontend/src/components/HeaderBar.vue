@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="logo">🍰 Cakie
+    <div class="logo">🍰 Cakies</div>
     <div class="right">
       <span>
         Xin chào,
