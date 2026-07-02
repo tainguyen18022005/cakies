@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
-import java.util.UUID;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,8 +41,12 @@ public class CartService {
     @Transactional
     public CartResponse addToCart(String sessionId, CartItemRequest request) {
         Cart cart = getCartEntity(sessionId);
-        Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+        Long productId = request.getProductId();
+        if (productId == null) {
+            throw new IllegalArgumentException("Product ID is required");
+        }
+        Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
 
         CartItem existingItem = cart.getCartItems().stream()
                 .filter(item -> item.getProduct().getId().equals(product.getId()))
@@ -105,8 +109,8 @@ public class CartService {
         response.setItems(items);
 
         BigDecimal total = items.stream()
-                .map(item -> item.getPrice().multiply(new BigDecimal(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .map(item -> item.getPrice().multiply(new BigDecimal(item.getQuantity())))
+            .reduce(BigDecimal.ZERO, (a, b) -> Objects.requireNonNull(a).add(Objects.requireNonNull(b)));
         response.setTotal(total);
 
         return response;

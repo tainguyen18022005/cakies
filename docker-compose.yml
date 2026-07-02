@@ -6,17 +6,16 @@ services:
     container_name: cakies_db
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=Cakies@123
+      - SA_PASSWORD=Cakies@123  # mật khẩu hợp lệ (>=8 ký tự, có chữ hoa, chữ thường, số, ký tự đặc biệt)
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Cakies@123", "-Q", "SELECT 1"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "StrongPassw0rd!", "-Q", "SELECT 1"]
+      interval: 60s
+      timeout: 40s
       retries: 10
 
   backend:

@@ -5,6 +5,7 @@ spring:
     password: Cakies@12345
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -12,10 +13,11 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.SQLServerDialect
+        use_nationalized_character_data: true
   sql:
     init:
-      mode: always
-      data-locations: classpath:data.sql
+      mode: never
+      encoding: UTF-8
 
 server:
   port: 8080

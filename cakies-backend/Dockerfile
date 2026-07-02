@@ -2,7 +2,6 @@
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
-# Tải dependency trước (cache layer)
 RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests
@@ -16,3 +15,4 @@ ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 EXPOSE 8080
 ENTRYPOINT ["java", "-Dfile.encoding=UTF-8", "-Dstdout.encoding=UTF-8", "-jar", "app.jar"]
+
